@@ -12,6 +12,7 @@ import React from 'react';
 import CoreApp, {createPlugin, createToken, html, unescape} from 'fusion-core';
 import {generateStyles, defaultThemeOptions} from './mui';
 import {ApolloProvider} from 'react-apollo';
+import stringify from 'json-stringify-safe';
 
 import {
   ProviderPlugin,
@@ -24,7 +25,7 @@ import {
 import type {Element} from 'react';
 import type {Context, Token} from 'fusion-core';
 
-import serverRender from './server';
+import serverRender from './stream-server';
 import clientRender from './client';
 
 type ApolloClientType = {
@@ -82,8 +83,8 @@ export default class App extends CoreApp {
           }
           return prepare(el).then(() => {
             return __NODE__ 
-            ? serverRender(el, {styles}, idStyle) 
-            : clientRender(el, {styles}, sideEffect, idStyle);
+            ? serverRender(el, {styles, idStyle}) 
+            : clientRender(el, {styles, sideEffect, idStyle});
           });
         }
       },

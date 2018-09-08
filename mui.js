@@ -27,18 +27,13 @@ export const defaultThemeOptions = {
 }
 
 export const generateStyles = (themeOptions = defaultThemeOptions) => {
-  const classNames = createGenerateClassName();
+  const classNames = createGenerateClassName({
+    dangerouslyUseGlobalCSS: true,
+    productionPrefix: 'c',
+  });
   const sheetsRegistry = new SheetsRegistry();
   const sheetsManager = new Map();
   const theme = createMuiTheme(themeOptions);
 
   return {sheetsRegistry, classNames, theme, sheetsManager};
-}
-
-
-export const renderFullPage = (html, css, idStyle) => {
-  return `
-    <div id="root">${html}</div>
-    <style id="${idStyle}">${css}</style>
-  `;
 };
